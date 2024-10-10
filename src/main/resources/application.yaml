@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: surepay
+  messages:
+    basename: messages.error, messages.validation

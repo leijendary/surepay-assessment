@@ -1,0 +1,21 @@
+services:
+  surepay-validator:
+    build: .
+    container_name: surepay-validator
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+      SPRING_DATASOURCE_URL: jdbc:postgresql://surepay-postgres:5432/surepay_validator
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 12345678
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health || exit 1" ]
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:16-alpine
+    container_name: surepay-postgres
+    environment:
+      POSTGRES_DB: surepay_validator
+      POSTGRES_PASSWORD: 12345678
